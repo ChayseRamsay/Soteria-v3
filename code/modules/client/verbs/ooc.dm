@@ -175,3 +175,105 @@ var/global/normal_ooc_colour = OOC_COLOR
 		src << "You can't ignore yourself."
 		return
 	ignore_key(selection)
+
+/client/verb/looc(msg as text)
+	set name = "LOOC"
+	set desc = "Local OOC, seen only by those in view."
+	set category = "OOC"
+
+	if(say_disabled)	//This is here to try to identify lag problems
+		usr << "<span class='danger'>Speech is currently admin-disabled.</span>"
+		return
+
+	if(!mob)
+		return
+
+	if(IsGuestKey(key))
+		src << "Guests may not use LOOC."
+		return
+
+	msg = copytext(sanitize(msg), 1, MAX_MESSAGE_LEN)
+	var/raw_msg = msg
+
+	if(!msg)
+		return
+
+	msg = emoji_parse(msg)
+
+	if((copytext(msg, 1, 2) in list(".",";",":","#")) || (findtext(lowertext(copytext(msg, 1, 5)), "say")))
+		if(alert("Your message \"[raw_msg]\" looks like it was meant for in game communication, say it in LOOC?", "Meant for OOC?", "No", "Yes") != "Yes")
+			return
+
+	if(!(prefs.chat_toggles & CHAT_OOC))
+		src << "<span class='danger'>You have LOOC muted.</span>"
+		return
+
+	if(!holder)
+		if(!ooc_allowed)
+			src << "<span class='danger'>OOC is globally muted.</span>"
+			return
+		if(!dooc_allowed && (mob.stat == DEAD))
+			usr << "<span class='danger'>OOC for dead mobs has been turned off.</span>"
+			return
+		if(prefs.muted & MUTE_OOC)
+			src << "<span class='danger'>You cannot use OOC (muted).</span>"
+			return
+		if(src.mob)
+			if(jobban_isbanned(src.mob, "OOC"))
+				src << "<span class='danger'>You have been banned from OOC.</span>"
+				return
+		if(handle_spam_prevention(msg,MUTE_OOC))
+			return
+		if(findtext(msg, "byond://"))
+			src << "<B>Advertising other servers is not allowed.</B>"
+			log_admin("[key_name(src)] has attempted to advertise in OOC: [msg]")
+			message_admins("[key_name_admin(src)] has attempted to advertise in OOC: [msg]")
+			return
+
+	log_ooc("[mob.name]/[key] : [raw_msg]")
+
+	var/mob/source = mob
+	var/list/heard = get_hearers_in_view(7, source)
+
+	var/display_name = key
+	if(holder && holder.fakekey)
+		display_name = holder.fakekey
+	if(mob.stat != DEAD)
+		display_name = mob.name
+
+	for(var/client/target in clients)
+		if(prefs.chat_toggles & CHAT_OOC)
+			var/prefix = ""
+			var/admin_stuff = ""
+			var/send = 0
+
+			if(target in admins)
+				if(check_rights_for(target,R_ADMIN))
+					admin_stuff += "/([key])"
+
+			if(target.mob in heard)
+				send = 1
+				if(isAI(target.mob))
+					prefix = " (Core)"
+
+			else if(isAI(target.mob)) // Special case
+				var/mob/living/silicon/ai/A = target.mob
+				if(A.eyeobj in hearers(7, source))
+					send = 1
+					prefix = " (Eye)"
+
+			if(!send && (target in admins))
+				if(check_rights_for(target,R_ADMIN))
+					send = 1
+					prefix = "(R)"
+
+			if(send)
+				target <<"<span class='ooc'><span class='looc'>LOOC<span class='prefix'>[prefix]: </span><EM>[display_name][admin_stuff]:</EM> <span class='message'>[msg]</span></span></span>"
+
+/mob/proc/get_looc_source()
+	return src
+
+/mob/living/silicon/ai/get_looc_source()
+	if(eyeobj)
+		return eyeobj
+	return src
