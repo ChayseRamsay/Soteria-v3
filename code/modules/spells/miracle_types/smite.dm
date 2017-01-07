@@ -1,5 +1,5 @@
 /obj/effect/proc_holder/spell/targeted/touch/miracle/smite
-	name = "Cure"
+	name = "Smite"
 	desc = "This spell allows you to fill another person with your god's, erm, 'love.'"
 	hand_path = "/obj/item/weapon/melee/touch_attack/smite"
 	action_icon_state = "sacredflame"
@@ -26,5 +26,5 @@
 	M.adjust_fire_stacks(3)
 	M.IgniteMob()
 	target << "<i>You hear a booming voice in your head... <b>[msgfromgod]</i></b>"
-	catchphrase = addtext(uppertext("FEEL THE WRATH OF"),uppertext(SSreligion.Bible_deity_name),"!")
+	catchphrase = addtext(uppertext("FEEL THE WRATH OF "),uppertext(SSreligion.Bible_deity_name),"!")
 	..()

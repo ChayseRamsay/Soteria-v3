@@ -4,7 +4,7 @@
 	panel = "Miracles"
 	invocation = "Be with us, holy one!"
 	action_icon_state = "blight"
-/obj/effect/proc_holder/spell/targeted/forcewall/summonereviverune/cast(list/targets,mob/user = usr)
+/obj/effect/proc_holder/spell/targeted/forcewall/summonreviverune/cast(list/targets,mob/user = usr)
 	new /obj/effect/rune/raise_dead/chaplain(get_turf(user),user)
 	if(user.dir == SOUTH || user.dir == NORTH)
 		new /obj/effect/rune/raise_dead/chaplain(get_step(user, EAST),user)
