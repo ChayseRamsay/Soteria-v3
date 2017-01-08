@@ -6,12 +6,6 @@
 	action_icon_state = "blight"
 /obj/effect/proc_holder/spell/targeted/forcewall/summonreviverune/cast(list/targets,mob/user = usr)
 	new /obj/effect/rune/raise_dead/chaplain(get_turf(user),user)
-	if(user.dir == SOUTH || user.dir == NORTH)
-		new /obj/effect/rune/raise_dead/chaplain(get_step(user, EAST),user)
-		new /obj/effect/rune/raise_dead/chaplain(get_step(user, WEST),user)
-	else
-		new /obj/effect/rune/raise_dead/chaplain(get_step(user, NORTH),user)
-		new /obj/effect/rune/raise_dead/chaplain(get_step(user, SOUTH),user)
 /obj/effect/rune/raise_dead/chaplain
 	name = "resurrection rune"
 	desc = "A sacred rune drawn by the Chaplain."
@@ -19,11 +13,11 @@
 	..()
 	QDEL_IN(src, 300)
 /obj/effect/rune/raise_dead/chaplain/attack_hand(mob/living/user)
-	if(!ischaplain(user))
+	if(ischaplain(user))
+		invoke(user)
+	else
 		user << "<span class='warning'>You aren't able to understand the words of [src].</span>"
 		return
-	else
-		invoke(user)
 /obj/effect/rune/raise_dead/chaplain/invoke(mob/living/invoker)
 	var/turf/T = get_turf(src)
 	var/mob/living/mob_to_revive
