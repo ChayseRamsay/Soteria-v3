@@ -8,7 +8,7 @@
 	return istype(M) && M.has_antag_datum(/datum/antagonist/cultist, TRUE)
 /proc/ischaplain(mob/living/M)
 	if(M.mind)
-		if(ishuman(M && (M.mind.assigned_role == "Chaplain")))
+		if(ishuman(M) && M.mind.assigned_role == "Chaplain")
 			return 1
 		else
 			return 0
