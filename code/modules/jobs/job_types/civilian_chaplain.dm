@@ -93,6 +93,6 @@ Chaplain
 	H.equip_to_slot_or_del(B, slot_in_backpack)
 	var/deitytype = input(H, "What is your God's sphere of influence?", "Sphere of Influence") as null|anything in SSreligion.possiblereligions
 	if (deitytype == "Light")
-		H.mind.AddSpell(/obj/effect/proc_holder/spell/targeted/touch/miracle/cure)
-		H.mind.AddSpell(/obj/effect/proc_holder/spell/targeted/touch/miracle/smite)
-		H.mind.AddSpell(/obj/effect/proc_holder/spell/targeted/forcewall/summonreviverune)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/miracle/cure)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/miracle/smite)
+		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/summonreviverune)
