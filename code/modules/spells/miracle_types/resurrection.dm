@@ -5,7 +5,7 @@
 	invocation = "Be with us, holy one!"
 	action_icon_state = "blight"
 /obj/effect/proc_holder/spell/targeted/forcewall/summonreviverune/cast(list/targets,mob/user = usr)
-	new /obj/effect/rune/raise_dead/chaplain(get_turf(user),user)
+	new /obj/effect/rune/chaplain/raisedead(get_turf(user),user)
 /obj/effect/rune/raise_dead/chaplain
 	name = "resurrection rune"
 	desc = "A sacred rune drawn by the Chaplain."
@@ -18,7 +18,7 @@
 	else
 		user << "<span class='warning'>You aren't able to understand the words of [src].</span>"
 		return
-/obj/effect/rune/raise_dead/chaplain/invoke(mob/living/invoker)
+/obj/effect/rune/chaplain/raisedead/invoke(mob/living/invoker)
 	var/turf/T = get_turf(src)
 	var/mob/living/mob_to_revive
 	var/list/potential_revive_mobs = list()
@@ -26,6 +26,8 @@
 	var/mob/living/user = invoker
 	var/totalvalue = 0
 	var/costtorevive = 200
+	icon_state = "1"
+	color = "#C80000"
 	if(rune_in_use)
 		return
 	for(var/mob/living/M in T.contents)
@@ -50,15 +52,11 @@
 		mob_to_revive = input(user, "Choose a person to revive.", "Person to Revive") as null|anything in potential_revive_mobs
 	else
 		mob_to_revive = potential_revive_mobs[1]
-	if(!src || qdeleted(src) || rune_in_use || !validness_checks(mob_to_revive, user))
-		return
 	rune_in_use = 1
 	if(user.name == "Herbert West")
 		user.say("To life, to life, I bring them!")
 	else
 		user.say("Pasnar val'keriam usinar. Savrae ines amutan. Yam'toth remium il'tarat!")
-	..()
-	revives_used++
 	mob_to_revive.revive(1, 1) //This does remove disabilities and such, but the rune might actually see some use because of it!
 	mob_to_revive.grab_ghost()
 	mob_to_revive << "<span class='cultlarge'>\"PASNAR SAVRAE YAM'TOTH. Arise.\"</span>"
