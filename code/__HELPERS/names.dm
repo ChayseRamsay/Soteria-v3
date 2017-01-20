@@ -69,6 +69,7 @@ var/religion_name = null
 	//Going to hardcode this cause fuck
 	config.server_name = "Soteria"
 	config.station_name = "Soteria Drydock and Cargo Supply Station"
+	station_name = config.station_name
 	world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
 	return station_name
 
