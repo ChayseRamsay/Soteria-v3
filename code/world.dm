@@ -4,10 +4,10 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
-	hub = "Exadv1.spacestation13"
+	hub = "Soteria"
 	hub_password = "kMZy3U5jJHSiBQjr"
-	name = "/tg/ Station 13"
-	fps = 20
+	name = "Soteria Drydock and Supply Station"
+	fps = 40
 	visibility = 0
 
 var/list/map_transition_config = MAP_TRANSITION_CONFIG
