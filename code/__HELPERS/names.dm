@@ -53,7 +53,9 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
-	/*if(station_name)
+	config.server_name = "Soteria"
+	config.station_name = "Soteria Drydock and Cargo Supply Station"
+	if(station_name)
 		return station_name
 
 	if(config && config.station_name)
