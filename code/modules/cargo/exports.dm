@@ -72,7 +72,7 @@ Credit dupes that require a lot of manual work shouldn't be removed, unless they
 
 // Checks the cost. 0 cost items are skipped in export.
 /datum/export/proc/get_cost(obj/O, contr = 0, emag = 0)
-	return cost * get_amount(O, contr, emag)
+	return cost * get_amount(O, contr, emag) * 1.5
 
 // Checks the amount of exportable in object. Credits in the bill, sheets in the stack, etc.
 // Usually acts as a multiplier for a cost, so item that has 0 amount will be skipped in export.

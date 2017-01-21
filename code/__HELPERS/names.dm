@@ -53,7 +53,9 @@ var/religion_name = null
 	return capitalize(name)
 
 /proc/station_name()
-	/*if(station_name)
+	config.server_name = "Soteria"
+	config.station_name = "Soteria Drydock and Cargo Supply Station"
+	if(station_name)
 		return station_name
 
 	if(config && config.station_name)
@@ -65,12 +67,7 @@ var/religion_name = null
 		world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
 	else
 		world.name = station_name
-*/
-	//Going to hardcode this cause fuck
-	config.server_name = "Soteria"
-	config.station_name = "Soteria Drydock and Cargo Supply Station"
-	station_name = config.station_name
-	world.name = "[config.server_name][config.server_name==station_name ? "" : ": [station_name]"]"
+
 	return station_name
 
 /proc/new_station_name()

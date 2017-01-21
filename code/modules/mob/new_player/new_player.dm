@@ -332,6 +332,11 @@
 		data_core.manifest_inject(humanc)
 		AnnounceArrival(humanc, rank)
 		AddEmploymentContract(humanc)
+		var/datum/account/A = new /datum/account
+		A.credits = rand(0,SSeconomy.wagemap[humanc.mind.assigned_role])
+		A.jobname = humanc.mind.assigned_role
+		A.associatedid = humanc.wear_id
+		SSeconomy.bank.addaccount(A)
 		if(highlander)
 			humanc << "<span class='userdanger'><i>THERE CAN BE ONLY ONE!!!</i></span>"
 			humanc.make_scottish()

@@ -5,6 +5,9 @@
 	desc = "A vending machine with microfabricator capable of dispensing various NT-branded computers."
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "robotics"
+	verb_say = "beeps"
+	verb_ask = "beeps"
+	verb_exclaim = "beeps"
 	layer = 2.9
 	anchored = 1
 	density = 1
@@ -17,7 +20,7 @@
 	var/state = 0 							// 0: Select device type, 1: Select loadout, 2: Payment, 3: Thankyou screen
 	var/devtype = 0 						// 0: None(unselected), 1: Laptop, 2: Tablet
 	var/total_price = 0						// Price of currently vended device.
-	var/credits = 0
+	var/datum/account/accounttocharge = null
 
 	// Device loadout
 	var/dev_cpu = 1							// 1: Default, 2: Upgraded
@@ -241,26 +244,22 @@
 
 
 /obj/machinery/lapvend/attackby(obj/item/I as obj, mob/user as mob)
-	if(istype(I,/obj/item/stack/spacecash))
-		var/obj/item/stack/spacecash/c = I
-
-		if(!user.drop_item(c))
-			return
-		credits += c.value
-		visible_message("<span class='info'><span class='name'>[usr]</span> inserts [c.value] credits into the [src].</span>")
-		qdel(c)
-		return
-
+	if(istype(I,/obj/item/weapon/card/id))
+		accounttocharge = SSeconomy.bank.findaccountbyid(I)
+		if(accounttocharge == null)
+			speak("No account find with swiped ID.")
+		else
+			speak("ID accepted, charging to account via method: Credit.") // Most roles can't afford a Laptop or Tablet early on, so let their account go negative in case they want to get one anyways
 	return ..()
 
 
 // Simplified payment processing, returns 1 on success.
 /obj/machinery/lapvend/proc/process_payment()
-	if(total_price > credits)
-		say("Insufficient credits.")
-		return 0
-	else
+	if(accounttocharge)
+		accounttocharge.withdraw(total_price)
 		return 1
+	else
+		return 0
 
 /obj/machinery/lapvend/ui_data(mob/user)
 
@@ -277,7 +276,6 @@
 		data["hw_cpu"] = dev_cpu
 	if(state == 1 || state == 2)
 		data["totalprice"] = total_price
-		data["credits"] = credits
 
 	return data
 
@@ -293,8 +291,14 @@
 			else if((devtype == 2) && fabricated_tablet)
 				fabricated_tablet.forceMove(src.loc)
 				fabricated_tablet = null
-			credits -= total_price
 			say("Enjoy your new product!")
 			state = 3
 			return 1
 		return 0
+/obj/machinery/lapvend/proc/speak(message)
+	if(stat & (BROKEN|NOPOWER))
+		return
+	if(!message)
+		return
+
+	say(message)
