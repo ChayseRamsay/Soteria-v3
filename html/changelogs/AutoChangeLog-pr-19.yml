@@ -1,0 +1,4 @@
+author: "athompson11"
+delete-after: True
+changes: 
+  - bugfix: "Laptop vendors are now on and available on station"
