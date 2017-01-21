@@ -1,0 +1,4 @@
+author: "athompson11"
+delete-after: True
+changes: 
+  - bugfix: "Due to an accounting error (the nonexistence of accounting), you were not actually being paid wages. You will now be paid these... 'wages' for your time on station, taken out of Cargo's budget. There's not much to do your 'pay' yet, besides buy Laptops, but Laptops are Laptops. Be happy with that, you ungrateful sods."
