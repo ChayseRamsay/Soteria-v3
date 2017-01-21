@@ -1,0 +1,4 @@
+author: "athompson11"
+delete-after: True
+changes: 
+  - bugfix: "Chaplain powers are now properly added and all available powers work."

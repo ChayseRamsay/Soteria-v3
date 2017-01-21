@@ -1,0 +1,4 @@
+author: "athompson11"
+delete-after: True
+changes: 
+  - bugfix: "The station is now named properly"
