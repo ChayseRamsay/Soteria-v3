@@ -1,18 +1,40 @@
 var/datum/subsystem/economy/SSeconomy
 
 /datum/subsystem/economy
+	name = "Economy"
 	flags = SS_KEEP_TIMING|SS_NO_TICK_CHECK //We run timers, and they need to be fairly accurate
 	init_order = -99
 	wait = 10
 	var/datum/bankdata/bank = new /datum/bankdata
-	var/payingwages = 1
-	var/timetopaying = 4000
-	var/timebetweenpay = 4000
+	var/budgetdry = 1
+	var/timebetweenpay = 12000 //remember to reset
 	var/list/wagemap = new/list()
+	var/wagemapinit = 0
+	var/waitingonpayday = 0
 
 /datum/subsystem/economy/New()
 	NEW_SS_GLOBAL(SSeconomy)
-/datum/subsytem/economy/proc/populatewagemap(var/list/wagemap)
+/datum/subsystem/economy/fire()
+	if(!Master.round_started) // Sanity Check, we shouldn't fire in the lobby, but if we do we tell the master controller to go ahead
+		return
+	else
+		if(!wagemapinit)
+			populatewagemap(wagemap)
+		if(budgetdry)
+			if(SSshuttle.points < 4500)
+				return
+			else
+				budgetdry = 0
+		if(!waitingonpayday)
+			if(SSshuttle.points < 4500)
+				priority_announce("The station budget appears to have run dry. We regret to inform you that no further wage payments are possible until this situation is rectified.","Payroll Announcement")
+				budgetdry = 1
+				return
+			queuepayday()
+			return
+		else
+			return
+/datum/subsystem/economy/proc/populatewagemap()
 	var/job
 	for(job in assistant_occupations)
 		wagemap |= job
@@ -60,7 +82,11 @@ var/datum/subsystem/economy/SSeconomy
 	SSeconomy.wagemap["Clown"] = 1
 	SSeconomy.wagemap["Mime"] = 0 //Is paid imaginary money
 	SSeconomy.wagemap["Assistant"] = 50
-	return(wagemap)
+	return
 /datum/subsystem/economy/proc/payWages()
 	for(var/datum/account/A in SSeconomy.bank.accounts)
-		A.pay(SSeconomy.wagemap[A.jobname])
+		A.add(SSeconomy.wagemap[A.jobname])
+		SSshuttle.points -= SSeconomy.wagemap[A.jobname]
+	waitingonpayday = 0
+/datum/subsystem/economy/proc/queuepayday()
+	addtimer(CALLBACK(SSeconomy, .proc/payWages), timebetweenpay, TIMER_UNIQUE)
