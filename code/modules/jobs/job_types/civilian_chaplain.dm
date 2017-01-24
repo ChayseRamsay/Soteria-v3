@@ -33,12 +33,12 @@ Chaplain
 
 	if(visualsOnly)
 		return
-
+	
 	H.mind.isholy = TRUE
 
 	var/obj/item/weapon/storage/book/bible/B = new /obj/item/weapon/storage/book/bible/booze(H)
 
-	if(SSreligion.Bible_deity_init)
+	if(SSreligion.Bible_deity_name)
 		B.deity_name = SSreligion.Bible_deity_name
 		B.name = SSreligion.Bible_name
 		B.icon_state = SSreligion.Bible_icon_state
@@ -88,11 +88,5 @@ Chaplain
 	B.deity_name = new_deity
 
 	SSreligion.Bible_deity_name = B.deity_name
-	SSreligion.Bible_deity_init = 1
 	feedback_set_details("religion_deity","[new_deity]")
 	H.equip_to_slot_or_del(B, slot_in_backpack)
-	var/deitytype = input(H, "What is your God's sphere of influence?", "Sphere of Influence") as null|anything in SSreligion.possiblereligions
-	if (deitytype == "Light")
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/miracle/cure)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/touch/miracle/smite)
-		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/forcewall/summonreviverune)
