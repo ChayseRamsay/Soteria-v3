@@ -4,7 +4,7 @@
 	area = /area/space
 	view = "15x15"
 	cache_lifespan = 7
-	hub = "Soteria"
+	hub = "Exadv1.spacestation13"
 	hub_password = "kMZy3U5jJHSiBQjr"
 	name = "Soteria Drydock and Supply Station"
 	fps = 40
