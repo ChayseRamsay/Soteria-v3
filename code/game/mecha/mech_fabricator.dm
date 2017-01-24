@@ -27,7 +27,7 @@
 								"Odysseus",
 								"Gygax",
 								"Durand",
-								"H.O.N.K",
+//								"H.O.N.K",
 								"Phazon",
 								"Exosuit Equipment",
 								"Cyborg Upgrade Modules",

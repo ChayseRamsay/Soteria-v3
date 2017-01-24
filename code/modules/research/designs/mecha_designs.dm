@@ -92,7 +92,7 @@
 	id = "honker_main"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/main
-	category = list("Exosuit Modules")
+//	category = list("Exosuit Modules")
 
 /datum/design/board/honker_peri
 	name = "\"H.O.N.K\" Peripherals Control module"
@@ -100,7 +100,7 @@
 	id = "honker_peri"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/peripherals
-	category = list("Exosuit Modules")
+//	category = list("Exosuit Modules")
 
 /datum/design/board/honker_targ
 	name = "\"H.O.N.K\" Weapons & Targeting Control module"
@@ -108,7 +108,7 @@
 	id = "honker_targ"
 	req_tech = list("programming" = 3, "engineering" = 3)
 	build_path = /obj/item/weapon/circuitboard/mecha/honker/targeting
-	category = list("Exosuit Modules")
+//	category = list("Exosuit Modules")
 
 
 /datum/design/board/phazon_main
