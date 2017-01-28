@@ -1,6 +1,6 @@
 /*
 Clown
-*//*
+*/
 /datum/job/clown
 	title = "Clown"
 	flag = CLOWN
@@ -104,7 +104,7 @@ Mime
 		H.mind.miming = 1
 
 	H.rename_self("mime")
-*/
+
 /*
 Librarian
 */

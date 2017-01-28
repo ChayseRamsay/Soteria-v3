@@ -6,7 +6,12 @@
 
 /proc/iscultist(mob/living/M)
 	return istype(M) && M.has_antag_datum(/datum/antagonist/cultist, TRUE)
-
+/proc/ischaplain(mob/living/M)
+	if(M.mind)
+		if(ishuman(M) && M.mind.assigned_role == "Chaplain")
+			return 1
+		else
+			return 0
 /proc/is_sacrifice_target(datum/mind/mind)
 	if(ticker.mode.name == "cult")
 		var/datum/game_mode/cult/cult_mode = ticker.mode
