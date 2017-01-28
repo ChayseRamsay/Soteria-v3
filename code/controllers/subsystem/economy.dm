@@ -79,8 +79,8 @@ var/datum/subsystem/economy/SSeconomy
 	SSeconomy.wagemap["Librarian"] = 75
 	SSeconomy.wagemap["Lawyer"] = 125
 	SSeconomy.wagemap["Chaplain"] = 55 //What are we paying you for, you kook
-//	SSeconomy.wagemap["Clown"] = 1
-//	SSeconomy.wagemap["Mime"] = 0 //Is paid imaginary money
+	SSeconomy.wagemap["Clown"] = 1
+	SSeconomy.wagemap["Mime"] = 0 //Is paid imaginary money
 	SSeconomy.wagemap["Assistant"] = 50
 	return
 /datum/subsystem/economy/proc/payWages()

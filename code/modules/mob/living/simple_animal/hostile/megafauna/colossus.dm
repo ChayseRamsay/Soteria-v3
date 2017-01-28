@@ -429,7 +429,7 @@ Difficulty: Very Hard
 	var/random_crystal = pick(typesof(/obj/machinery/anomalous_crystal) - /obj/machinery/anomalous_crystal/random - /obj/machinery/anomalous_crystal)
 	new random_crystal(loc)
 	qdel(src)
-/*
+
 /obj/machinery/anomalous_crystal/honk //Strips and equips you as a clown. I apologize for nothing
 	activation_method = "mob_bump"
 	activation_sound = 'sound/items/bikehorn.ogg'
@@ -447,7 +447,7 @@ Difficulty: Very Hard
 /obj/machinery/anomalous_crystal/honk/New()
 	..()
 	activation_method = pick("mob_bump","speech")
-*/
+
 /obj/machinery/anomalous_crystal/theme_warp //Warps the area you're in to look like a new one
 	activation_method = "touch"
 	cooldown_add = 200
