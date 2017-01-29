@@ -1,6 +1,6 @@
 ##/tg/station v1.0.1
 
-[![Build Status](https://travis-ci.org/tgstation/tgstation.png)](https://travis-ci.org/tgstation/tgstation)
+[![Build Status](https://travis-ci.org/ChayseRamsay/Soteria-v3.png)](https://travis-ci.org/ChayseRamsay/Soteria-v3.svg?branch=master)
 
 
 **Website:** http://www.tgstation13.org <BR>
